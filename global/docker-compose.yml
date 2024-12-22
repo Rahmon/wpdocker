@@ -1,0 +1,66 @@
+version: "2.4"
+services:
+  # Run a local dnsmasq server for the containers that will resolve DNS queries and
+  # route any *.test domains to the gateway container
+  dns:
+    image: andyshinn/dnsmasq
+    cap_add:
+      - NET_ADMIN
+    command: -A /test/10.0.0.3 --log-facility=-
+    networks:
+      wplocaldocker:
+        ipv4_address: 10.0.0.2
+  gateway:
+    image: jwilder/nginx-proxy:alpine
+    ports:
+      - 127.0.0.1:80:80
+      - 127.0.0.1:443:443
+    volumes:
+      - ./ssl-certs:/etc/nginx/certs:ro
+      - ./config/nginx/503.html:/usr/share/nginx/html/503.html:ro
+      - ./config/nginx/nginx.tmpl:/app/nginx.tmpl:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      wplocaldocker:
+        ipv4_address: 10.0.0.3
+  mysql:
+    image: mariadb:10.3
+    volumes:
+      - ./config/mysql/config.cnf:/etc/mysql/mysql.conf.d/wp-local-docker.cnf:ro
+      - mysqlData:/var/lib/mysql
+    ports:
+      - 127.0.0.1:3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: password
+    mem_limit: 1024M
+    mem_reservation: 1024M
+    networks:
+      - wplocaldocker
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - 127.0.0.1:1025:1025
+      - 127.0.0.1:1080:1080
+    environment:
+      MAILCATCHER_PORT: 1025
+    networks:
+      - wplocaldocker
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 127.0.0.1:8092:80
+    depends_on:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+    networks:
+      - wplocaldocker
+networks:
+  wplocaldocker:
+    name: wplocaldocker
+    external: true
+volumes:
+  mysqlData:
+  elasticsearchData:

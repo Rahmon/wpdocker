@@ -1,0 +1,97 @@
+{
+	"name": "wp-docker",
+	"version": "1.0.0",
+	"description": "WP Docker",
+	"license": "MIT",
+	"homepage": "https://github.com/Rahmon/wp-docker",
+	"bugs": {
+		"url": "https://github.com/Rahmon/wp-docker/issues"
+	},
+	"keywords": [
+		"wordpress",
+		"wp",
+		"wp-cli",
+		"wpsnapshots",
+		"docker",
+		"docker-compose",
+		"nginx",
+		"php",
+		"mysql",
+		"phpmyadmin",
+		"memcache",
+		"memcached",
+		"mailcatcher"
+	],
+	"preferGlobal": true,
+	"main": "index.js",
+	"files": [
+		"src",
+		"global",
+		"scripts",
+		"index.js",
+		"hosts.js"
+	],
+	"scripts": {
+		"postinstall": "npm run wpdocker postinstall --silent",
+		"wpdocker": "./index.js",
+		"wpdocker-hosts": "./hosts.js",
+		"lint": "eslint . --ext .js --ignore-pattern node_modules",
+		"format": "npm run lint --silent -- --fix"
+	},
+	"bin": {
+		"wpdocker": "./index.js",
+		"wpdocker-hosts": "./hosts.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:Rahmon/wp-docker.git"
+	},
+	"engines": {
+		"node": ">=18"
+	},
+	"author": "Ramon Ahnert <ramondev@duck.com> (https://nomar.dev/)",
+	"dependencies": {
+		"@sindresorhus/slugify": "^1.1.2",
+		"asyncro": "^3.0.0",
+		"boxen": "^5.0.1",
+		"chalk": "^4.1.2",
+		"docker-compose": "^0.23.13",
+		"dockerode": "^3.3.0",
+		"fs-extra": "^9.1.0",
+		"hostile": "^1.3.3",
+		"inquirer": "^8.1.2",
+		"log-symbols": "^4.1.0",
+		"markdown-it": "^12.2.0",
+		"mkcert": "^1.4.0",
+		"mkcert-prebuilt": "^1.0.0",
+		"mysql": "^2.17.1",
+		"netcat": "^1.4.0",
+		"ora": "^5.4.1",
+		"read-yaml": "^1.1.0",
+		"request": "^2.88.2",
+		"shell-escape": "^0.2.0",
+		"strip-ansi": "^6.0.0",
+		"sudo-prompt": "^9.2.1",
+		"table": "^6.7.1",
+		"terminal-link": "^2.1.1",
+		"update-check": "^1.5.3",
+		"which": "^2.0.2",
+		"write-yaml": "^1.0.0",
+		"yargs": "^16.2.0"
+	},
+	"devDependencies": {
+		"@10up/eslint-config": "^1.0.9",
+		"babel-eslint": "^10.0.3",
+		"eslint": "^7.32.0",
+		"husky": "^4.3.8",
+		"lint-staged": "^10.5.4"
+	},
+	"lint-staged": {
+		"*.js": "eslint"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	}
+}

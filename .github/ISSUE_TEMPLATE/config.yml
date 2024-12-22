@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+    - name: Looking for documentation?
+      url: https://github.com/Rahmon/wp-docker/#readme
+      about: If you're looking for information on installation, global commands, environments, WP Snapshots, and related tools then check out the WP Local Docker Readme.
