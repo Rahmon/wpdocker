@@ -2,7 +2,7 @@
 
 > WP Docker is an easy to use Docker based local development environment for WordPress development that works on Mac, Windows, and Linux.
 
-[![Release Version](https://img.shields.io/github/release/Rahmon/wp-docker.svg)](https://github.com/Rahmon/wp-docker/releases/latest) [![MIT License](https://img.shields.io/github/license/Rahmon/wp-docker.svg)](https://github.com/Rahmon/wp-docker/blob/master/LICENSE)
+[![Release Version](https://img.shields.io/github/release/Rahmon/wpdocker.svg)](https://github.com/Rahmon/wpdocker/releases/latest) [![MIT License](https://img.shields.io/github/license/Rahmon/wpdocker.svg)](https://github.com/Rahmon/wpdocker/blob/master/LICENSE)
 
 > **Note**<br>
 > This is a fork of [10updocker](https://github.com/10up/wp-local-docker-v2).
@@ -195,7 +195,7 @@ Getting WP Docker up and running on your system involves a few simple steps. Sta
 Next, you can install WP Docker as a global npm package. Run the following command in your terminal:
 
 ```bash
-npm install -g wp-docker
+npm install -g @wpdocker/wpdocker
 ```
 
 To confirm that WP Docker has been installed successfully, you can check its version. Simply type:
@@ -221,7 +221,7 @@ Then, follow the prompts to customise your settings.
 Keeping WP Docker up-to-date is important. To update it, you can run the installation command again. NPM will replace your current version with the latest one. Here's the command:
 
 ```bash
-npm install -g wp-docker
+npm install -g @wpdocker/wpdocker
 ```
 
 ---
@@ -592,7 +592,7 @@ Starting from version 4.0.0, WP Docker has switched from the old [WP Snapshots](
 
 #### Configuration
 
-If you haven't used [Snapshots](https://github.com/10up/snapshots) with [WP Docker](https://github.com/Rahmon/wp-docker) yet, you'll first need to configure Snapshots with your AWS credentials. To do so, run the following command:
+If you haven't used [Snapshots](https://github.com/10up/snapshots) with [WP Docker](https://github.com/Rahmon/wpdocker) yet, you'll first need to configure Snapshots with your AWS credentials. To do so, run the following command:
 
 ```
 wpdocker wp snapshots configure <repository>
@@ -638,7 +638,7 @@ Replace `<command>` with any command that Snapshots accepts. The command is pass
 
 Concurrent environments are limited by the available resources of your host machine.
 
-### I am having issues with wp-docker, what are the best troubleshooting techniques?
+### I am having issues with wpdocker, what are the best troubleshooting techniques?
 
 See the [Troubleshooting](#troubleshooting) section.
 
@@ -724,10 +724,10 @@ Facing issues with WP Docker? Here are a few steps you can follow to troubleshoo
 
 1. Update Docker and Node: First, make sure that Docker and Node are up to date.
 
-2. Update wp-docker: Ensure that wp-docker is up to date as well. You can do this by running the following command:
+2. Update wpdocker: Ensure that wpdocker is up to date as well. You can do this by running the following command:
 
 ```
-npm i -g wp-docker
+npm i -g @wpdocker/wpdocker
 ```
 
 3. Restart Docker: Once everything is up to date, it's generally a good idea to restart Docker.
@@ -758,7 +758,7 @@ Remember, troubleshooting is a process of elimination. Try these steps one by on
 
 ### Avoiding conflicts with other local dev environments (Valet, MAMP, etc) on macOS
 
-If you are running something like MAMP or Laravel Valet on your Mac, it is possible you may have port conflicts when attempting to use wp-docker, such as:
+If you are running something like MAMP or Laravel Valet on your Mac, it is possible you may have port conflicts when attempting to use wpdocker, such as:
 
 ```
 Cannot start service mysql: Ports are not available: listen tcp 127.0.0.1:3306: bind: address already in use
@@ -773,7 +773,7 @@ sudo lsof -i -P | grep LISTEN
 sudo lsof -i -P | grep :3306
 ```
 
-If you see a process that is using that port, that process should be stopped before you attempt to start or create any new environments with wp-docker.
+If you see a process that is using that port, that process should be stopped before you attempt to start or create any new environments with wpdocker.
 
 If you installed `mysqld` via Homebrew, you need to stop the process via Homebrew:
 
@@ -811,7 +811,7 @@ If that doesn't resolve the issues, try updating your Docker images using `wpdoc
 
 ## Migrating from 10updocker
 
-If you already have 10updocker installed and working, you can install wpdocker (`npm install -g wp-docker`) and start
+If you already have 10updocker installed and working, you can install wpdocker (`npm install -g @wpdocker/wpdocker`) and start
 using it by typing `wpdocker` instead of `10updocker` e.g. `wpdocker start`. Your settings will remain the same. At this
 point, you just changed the name of the tool.
 

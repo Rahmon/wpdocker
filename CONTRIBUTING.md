@@ -10,11 +10,11 @@ Contributing isn't just writing code - it's anything that improves the project. 
 
 ### Reporting bugs
 
-If you're running into an issue, please take a look through [existing issues](https://github.com/Rahmon/wp-docker/issues) and [open a new one](https://github.com/Rahmon/wp-docker/issues/new) if needed.  If you're able, include steps to reproduce, environment information, and screenshots/screencasts as relevant.
+If you're running into an issue, please take a look through [existing issues](https://github.com/Rahmon/wpdocker/issues) and [open a new one](https://github.com/Rahmon/wpdocker/issues/new) if needed.  If you're able, include steps to reproduce, environment information, and screenshots/screencasts as relevant.
 
 ### Suggesting enhancements
 
-New features and enhancements are also managed via [issues](https://github.com/Rahmon/wp-docker/issues).
+New features and enhancements are also managed via [issues](https://github.com/Rahmon/wpdocker/issues).
 
 ### Pull requests
 
@@ -33,7 +33,7 @@ The `develop` branch is the development branch which means it contains the next 
 1. Readme updates: Make any other readme changes to `README.md` as necessary.
 1. Merge: Make a non-fast-forward merge from your release branch to `develop` (or merge the pull request), then do the same for `develop` into `master` (`git checkout master && git merge --no-ff develop`). `master` contains the stable development version.
 1. Push: Push your master branch to GitHub (e.g. `git push origin master`).
-1. Release: Create a [new release](https://github.com/Rahmon/wp-docker/releases/new), naming the tag and the release with the new version number, and targeting the `master` branch. Paste the changelog from `CHANGELOG.md` into the body of the release and include a link to the closed issues on the [milestone](https://github.com/Rahmon/wp-docker/milestone/#?closed=1).
-1. Close milestone: Edit the [milestone](https://github.com/Rahmon/wp-docker/milestone/#) with release date (in the `Due date (optional)` field) and link to GitHub release (in the `Description` field), then close the milestone.
+1. Release: Create a [new release](https://github.com/Rahmon/wpdocker/releases/new), naming the tag and the release with the new version number, and targeting the `master` branch. Paste the changelog from `CHANGELOG.md` into the body of the release and include a link to the closed issues on the [milestone](https://github.com/Rahmon/wpdocker/milestone/#?closed=1).
+1. Close milestone: Edit the [milestone](https://github.com/Rahmon/wpdocker/milestone/#) with release date (in the `Due date (optional)` field) and link to GitHub release (in the `Description` field), then close the milestone.
 1. Punt incomplete items: If any open issues or PRs which were milestoned for `X.Y.Z` do not make it into the release, update their milestone to `X.Y.Z+1`, `X.Y+1.0`, `X+1.0.0` or `Future Release`.
 1. Update [NPM](https://www.npmjs.com/package/wp-local-docker) with the latest version.

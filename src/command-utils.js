@@ -6,7 +6,7 @@ const chalk = require( 'chalk' );
 
 const envUtils = require( './env-utils' );
 
-exports.checkIfDockerRunning = function() {
+exports.checkIfDockerRunning = function () {
 	let output;
 
 	try {
@@ -22,7 +22,7 @@ exports.checkIfDockerRunning = function() {
 	return true;
 };
 
-exports.checkForUpdates = async function() {
+exports.checkForUpdates = async function () {
 	const pkg = require( path.join( envUtils.rootPath, 'package' ) );
 	let update = null;
 
@@ -33,6 +33,6 @@ exports.checkForUpdates = async function() {
 	}
 
 	if ( update ) {
-		console.warn( chalk.yellow( `WP Docker version ${ update.latest } is now available. Please run \`npm i -g wp-docker\` to update!` ) );
+		console.warn( chalk.yellow( `WP Docker version ${ update.latest } is now available. Please run \`npm i -g @wpdocker/wpdocker\` to update!` ) );
 	}
 };

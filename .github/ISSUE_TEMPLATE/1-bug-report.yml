@@ -11,7 +11,7 @@ body:
       id: faqs
       attributes:
         label: Troubleshooting
-        description: By submitting this issue, you agree that our [troubleshooting tips](https://github.com/Rahmon/wp-docker#i-am-having-issues-with-wp-local-docker-what-are-the-best-troubleshooting-techniques) have not helped resolve the issue.
+        description: By submitting this issue, you agree that our [troubleshooting tips](https://github.com/Rahmon/wpdocker#i-am-having-issues-with-wp-local-docker-what-are-the-best-troubleshooting-techniques) have not helped resolve the issue.
         options:
           - label: I have attempted to troubleshoot this already
             required: true
@@ -63,7 +63,7 @@ body:
       id: terms
       attributes:
         label: Code of Conduct
-        description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/Rahmon/wp-docker/blob/develop/CODE_OF_CONDUCT.md).
+        description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/Rahmon/wpdocker/blob/develop/CODE_OF_CONDUCT.md).
         options:
           - label: I agree to follow this project's Code of Conduct
             required: true

@@ -11,4 +11,4 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ### Removes
 
-[Unreleased]: https://github.com/Rahmon/wp-docker/compare/master...develop
+[Unreleased]: https://github.com/Rahmon/wpdocker/compare/master...develop

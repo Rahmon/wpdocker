@@ -1,11 +1,11 @@
 {
-	"name": "wp-docker",
+	"name": "@wpdocker/wpdocker",
 	"version": "1.0.0",
 	"description": "WP Docker",
 	"license": "MIT",
-	"homepage": "https://github.com/Rahmon/wp-docker",
+	"homepage": "https://github.com/Rahmon/wpdocker",
 	"bugs": {
-		"url": "https://github.com/Rahmon/wp-docker/issues"
+		"url": "https://github.com/Rahmon/wpdocker/issues"
 	},
 	"keywords": [
 		"wordpress",
@@ -44,7 +44,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+ssh://git@github.com/Rahmon/wp-docker.git"
+		"url": "git+ssh://git@github.com/Rahmon/wpdocker.git"
 	},
 	"engines": {
 		"node": ">=18"
