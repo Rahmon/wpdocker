@@ -39,12 +39,12 @@
 		"format": "npm run lint --silent -- --fix"
 	},
 	"bin": {
-		"wpdocker": "./index.js",
-		"wpdocker-hosts": "./hosts.js"
+		"wpdocker": "index.js",
+		"wpdocker-hosts": "hosts.js"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git@github.com:Rahmon/wp-docker.git"
+		"url": "git+ssh://git@github.com/Rahmon/wp-docker.git"
 	},
 	"engines": {
 		"node": ">=18"
