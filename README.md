@@ -15,7 +15,7 @@ After using 10updocker for years, I still think this is the best tool for WordPr
 12 April 2024 and I had issues after installing it in a fresh environment. After fixing the issues, I thought it was worth creating a
 fork in case someone wants to keep using it.
 
-I don't pretend to add new features (maybe removing some of them) but apply fixes to keep things working
+I don't intend to add new features (maybe removing some of them) but apply fixes to keep things working
 as expected i.e. updating images, fixing warnings, etc.
 
 Compare the main changes between 10updocker v4 and wpdocker v1.
