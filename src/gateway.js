@@ -13,7 +13,7 @@ const compose = require( './utils/docker-compose' );
 let started = false;
 
 async function ensureNetworkExists( docker, spinner ) {
-	if ( ! spinner ) {
+	if ( !spinner ) {
 		console.log( 'Ensuring global network exists' );
 	}
 
@@ -22,13 +22,13 @@ async function ensureNetworkExists( docker, spinner ) {
 	const network = docker.getNetwork( networkName );
 	const data = await network.inspect().catch( () => false );
 	if ( data ) {
-		if ( ! spinner ) {
+		if ( !spinner ) {
 			console.log( ' - Network exists' );
 		}
 		return;
 	}
 
-	if ( ! spinner ) {
+	if ( !spinner ) {
 		console.log( ' - Creating network' );
 	}
 
@@ -39,8 +39,8 @@ async function ensureNetworkExists( docker, spinner ) {
 			Driver: 'default',
 			Config: [
 				{
-					Subnet: '10.0.0.0/16',
-					IPRange: '10.0.128.0/17',
+					Subnet: '10.0.0.0/18',
+					IPRange: '10.0.32.0/19',
 					Gateway: '10.0.0.1',
 				},
 			],
@@ -49,25 +49,25 @@ async function ensureNetworkExists( docker, spinner ) {
 }
 
 async function removeNetwork( docker, spinner ) {
-	if ( ! spinner ) {
+	if ( !spinner ) {
 		console.log( 'Removing Global Network' );
 	}
 
 	const network = docker.getNetwork( 'wplocaldocker' );
 	const data = await network.inspect().catch( () => false );
-	if ( ! data ) {
+	if ( !data ) {
 		return;
 	}
 
 	await network.remove();
 
-	if ( ! spinner ) {
+	if ( !spinner ) {
 		console.log( ' - Network Removed' );
 	}
 }
 
 async function ensureCacheExists( docker, spinner ) {
-	if ( ! spinner ) {
+	if ( !spinner ) {
 		console.log( 'Ensuring global cache volume exists' );
 	}
 
@@ -75,11 +75,11 @@ async function ensureCacheExists( docker, spinner ) {
 	const data = await volume.inspect().catch( () => false );
 
 	if ( data ) {
-		if ( ! spinner ) {
+		if ( !spinner ) {
 			console.log( ' - Volume Exists' );
 		}
 	} else {
-		if ( ! spinner ) {
+		if ( !spinner ) {
 			console.log( ' - Creating Volume' );
 		}
 
@@ -94,13 +94,13 @@ async function removeCacheVolume( docker, spinner ) {
 	const data = await volume.inspect().catch( () => false );
 
 	if ( data ) {
-		if ( ! spinner ) {
+		if ( !spinner ) {
 			console.log( 'Removing cache volume' );
 		}
 
 		await volume.remove();
 
-		if ( ! spinner ) {
+		if ( !spinner ) {
 			console.log( ' - Volume Removed' );
 		}
 	}
@@ -128,7 +128,7 @@ function waitForDB( spinner ) {
 			netcat.address( '127.0.0.1' );
 			netcat.port( 3306 );
 			netcat.connect();
-			netcat.on( 'data', function(  ) {
+			netcat.on( 'data', function () {
 				netcat.close();
 
 				if ( spinner ) {
@@ -144,7 +144,7 @@ function waitForDB( spinner ) {
 
 async function startGateway( spinner, pull ) {
 	let cwd = path.join( config.getConfigDirectory(), 'global' );
-	if ( ! fs.existsSync( cwd ) ) {
+	if ( !fs.existsSync( cwd ) ) {
 		cwd = envUtils.globalPath;
 	}
 
