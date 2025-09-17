@@ -2,6 +2,7 @@ const { validateNotEmpty, parseHostname, parseProxyUrl } = require( '../../promp
 const { createDefaultProxy } = require( '../../env-utils' );
 
 const phpVersions = [
+	'8.3',
 	'8.2',
 	'8.1',
 	'8.0',
@@ -53,7 +54,7 @@ function marshalWordPress( original, answers ) {
 
 	[ 'title', 'username', 'password', 'email' ].forEach( ( key ) => {
 		if ( answers[key] ) {
-			wp[ key ] = answers[ key ];
+			wp[key] = answers[key];
 		}
 	} );
 
@@ -96,7 +97,7 @@ module.exports = function makeInquirer( { prompt } ) {
 				validate: validateNotEmpty,
 				filter: parseHostname,
 				when() {
-					return ! domain || ( Array.isArray( domain ) && ! domain.length );
+					return !domain || ( Array.isArray( domain ) && !domain.length );
 				},
 			},
 			{
@@ -105,7 +106,7 @@ module.exports = function makeInquirer( { prompt } ) {
 				message: 'Are there additional domains the site should respond to?',
 				default: false,
 				when() {
-					return ! domain || ( Array.isArray( domain ) && ! domain.length );
+					return !domain || ( Array.isArray( domain ) && !domain.length );
 				},
 			},
 			{
@@ -130,7 +131,7 @@ module.exports = function makeInquirer( { prompt } ) {
 				choices: phpVersions,
 				default: '7.4',
 				when() {
-					return ! phpVersions.includes( php );
+					return !phpVersions.includes( php );
 				},
 			},
 			{
@@ -147,7 +148,7 @@ module.exports = function makeInquirer( { prompt } ) {
 				default: 'single',
 				when( answers ) {
 					const installWp = answers.wordpress === true;
-					const wrongType = wordpressType && ! wordpressTypes.map( ( { value } ) => value ).includes( wordpressType );
+					const wrongType = wordpressType && !wordpressTypes.map( ( { value } ) => value ).includes( wordpressType );
 					return installWp || wrongType;
 				},
 			},
@@ -160,7 +161,7 @@ module.exports = function makeInquirer( { prompt } ) {
 				},
 				validate: validateNotEmpty,
 				when( answers ) {
-					return answers.wordpress === true || ( wordpress && ! wordpressTitle );
+					return answers.wordpress === true || ( wordpress && !wordpressTitle );
 				},
 			},
 			{
@@ -170,7 +171,7 @@ module.exports = function makeInquirer( { prompt } ) {
 				default: 'admin',
 				validate: validateNotEmpty,
 				when( answers ) {
-					return answers.wordpress === true || ( wordpress && ! wordpressUsername );
+					return answers.wordpress === true || ( wordpress && !wordpressUsername );
 				},
 			},
 			{
@@ -180,7 +181,7 @@ module.exports = function makeInquirer( { prompt } ) {
 				default: 'password',
 				validate: validateNotEmpty,
 				when( answers ) {
-					return answers.wordpress === true || ( wordpress && ! wordpressPassword );
+					return answers.wordpress === true || ( wordpress && !wordpressPassword );
 				},
 			},
 			{
@@ -190,7 +191,7 @@ module.exports = function makeInquirer( { prompt } ) {
 				default: 'admin@example.com',
 				validate: validateNotEmpty,
 				when( answers ) {
-					return answers.wordpress === true || ( wordpress && ! wordpressEmail );
+					return answers.wordpress === true || ( wordpress && !wordpressEmail );
 				},
 			},
 			{
@@ -199,7 +200,7 @@ module.exports = function makeInquirer( { prompt } ) {
 				message: 'Do you want to remove the default content?',
 				default: false,
 				when( answers ) {
-					return answers.wordpress === true || ( wordpress && ! wordpressPurify );
+					return answers.wordpress === true || ( wordpress && !wordpressPurify );
 				},
 			},
 			{

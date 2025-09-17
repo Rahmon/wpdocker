@@ -80,7 +80,7 @@ Each environment you create in WP Docker is powered by a couple of services you 
 - **memcached**: a distributed memory object caching system,
 - **elasticsearch** (optional): a search and analytics engine.
 
-You can choose to run your environment on different versions of PHP including 5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1 or 8.2.
+You can choose to run your environment on different versions of PHP including 5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2 or 8.3.
 
 WP Docker comes with features that make managing your WordPress development a breeze:
 
