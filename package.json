@@ -1,6 +1,6 @@
 {
 	"name": "@wpdocker/wpdocker",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "WP Docker",
 	"license": "MIT",
 	"homepage": "https://github.com/Rahmon/wpdocker",

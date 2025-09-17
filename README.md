@@ -15,7 +15,7 @@ After using 10updocker for years, I still think this is the best tool for WordPr
 12 April 2024 and I had issues after installing it in a fresh environment. After fixing the issues, I thought it was worth creating a
 fork in case someone wants to keep using it.
 
-I don't pretend to add new features (maybe removing some of them) but apply fixes to keep things working
+I don't intend to add new features (maybe removing some of them) but apply fixes to keep things working
 as expected i.e. updating images, fixing warnings, etc.
 
 Compare the main changes between 10updocker v4 and wpdocker v1.
@@ -80,7 +80,7 @@ Each environment you create in WP Docker is powered by a couple of services you 
 - **memcached**: a distributed memory object caching system,
 - **elasticsearch** (optional): a search and analytics engine.
 
-You can choose to run your environment on different versions of PHP including 5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1 or 8.2.
+You can choose to run your environment on different versions of PHP including 5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2 or 8.3.
 
 WP Docker comes with features that make managing your WordPress development a breeze:
 
