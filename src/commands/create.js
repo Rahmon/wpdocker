@@ -2,7 +2,7 @@ const { EOL } = require( 'os' );
 
 const inquirer = require( 'inquirer' );
 const fsExtra = require( 'fs-extra' );
-const sudo = require( 'sudo-prompt' );
+const sudo = require( '@vscode/sudo-prompt' );
 const which = require( 'which' );
 
 const { startGlobal } = require( '../gateway' );
