@@ -23,6 +23,7 @@ Compare the main changes between 10updocker v4 and wpdocker v1.
 You can consider using alternatives:
 - [wp-env](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/)
 - [Lando](https://docs.lando.dev/plugins/wordpress/)
+- [WordPress Studio](https://developer.wordpress.com/studio/)
 
 ---
 

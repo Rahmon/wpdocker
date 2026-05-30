@@ -2,7 +2,7 @@ const path = require( 'path' );
 
 const fsExtra = require( 'fs-extra' );
 const inquirer = require( 'inquirer' );
-const sudo = require( 'sudo-prompt' );
+const sudo = require( '@vscode/sudo-prompt' );
 const chalk = require( 'chalk' );
 const which = require( 'which' );
 
