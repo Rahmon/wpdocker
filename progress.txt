@@ -10,3 +10,7 @@
 2026-06-05: prompt-validators unit tests
 - Created test/unit/prompt-validators.test.js: 27 passing tests for validateNotEmpty, validateBool, parseHostname, parseProxyUrl
 - npm test: 43/43 pass; npm run lint: clean
+
+2026-06-05: env-utils unit tests (pure subset)
+- Created test/unit/env-utils.test.js: 13 passing tests for envSlug (slugify behavior) and createDefaultProxy (http prefix, .com TLD handling)
+- npm test: 56/56 pass; npm run lint: clean
