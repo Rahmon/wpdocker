@@ -41,3 +41,11 @@
 - Created test/unit/create/inquirer.test.js: 21 passing tests for makeInquirer via stub prompt
 - Covers marshalDomains (single hostname, scalar domain passthrough, Set deduplication, extraHosts merging), marshalWordPress (boolean→{}, title/user/pass/email, type, purify, emptyContent), and top-level field passthrough (php, name, elasticsearch, mediaProxy)
 - npm test: 89/89 pass; npm run lint: clean
+
+2026-06-05: gateway integration tests
+- Created test/integration/gateway.test.js: 14 passing tests
+- Mocked ../../src/utils/make-docker (var-hoisted mockDocker swap), ../../src/utils/docker-compose, ../../src/configure, ../../src/env-utils, fs, netcat/client
+- Covers: ensureNetworkExists (create when inspect rejects, skip when it resolves, console log branch), ensureCacheExists (create vs skip), removeCacheVolume (remove vs skip), startGlobal (getNetwork+getVolume+upAll in order, idempotent started flag, pullAll before upAll when pull=true), stopGlobal (down+removeNetwork, error swallowing), restartGlobal (ensureNetwork+restartAll, error swallowing)
+- waitForDB tested via jest.useFakeTimers()+jest.runAllTimersAsync(); nc mock's connect() emits 'data' via setImmediate so listener is registered first
+- jest.resetModules()+re-require per test resets the module-level started flag
+- npm test: 158/158 pass; npm run lint: clean
