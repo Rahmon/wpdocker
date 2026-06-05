@@ -26,6 +26,11 @@
 - Covers: PHP version → image, certs on/off → CERT_NAME, VIRTUAL_HOST wildcards, wordpress.type dev/non-dev → nginx+wp-cli volumes, elasticsearch on/off, Linux branch (custom image, build args, user-scoped volumes), cacheVolume, dockerCompose filter hook (truthy/falsy return), spinner.start/succeed, snapshot for full non-linux standard config
 - npm test: 106/106 pass; npm run lint: clean
 
+2026-06-05: utils/docker-compose integration tests
+- Created test/integration/utils/docker-compose.test.js: 18 passing tests
+- Mocked docker-compose npm package entirely; all 8 proxied methods tested for arg-forwarding and exitCode error throwing via interpretComposerResults; isRunning tested for resolve→true and reject→false
+- npm test: 124/124 pass; npm run lint: clean
+
 2026-06-05: create/inquirer unit tests
 - Created test/unit/create/inquirer.test.js: 21 passing tests for makeInquirer via stub prompt
 - Covers marshalDomains (single hostname, scalar domain passthrough, Set deduplication, extraHosts merging), marshalWordPress (boolean→{}, title/user/pass/email, type, purify, emptyContent), and top-level field passthrough (php, name, elasticsearch, mediaProxy)
