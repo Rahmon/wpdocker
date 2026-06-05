@@ -17,3 +17,4 @@ nbproject/
 node_modules
 notes.md
 wp-local-docker-*
+coverage

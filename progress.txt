@@ -1,0 +1,8 @@
+2026-06-05: Test infrastructure setup + helpers unit tests
+- Installed jest@^29.7.0 as devDependency
+- Added test/test:watch/test:coverage scripts to package.json
+- Created jest.config.js (node env, test/**, coverage from src/**)
+- Added coverage/ to .gitignore
+- Bumped CI workflow node-version 12→26, added npm test step
+- Created test/unit/helpers.test.js: 16 passing tests for unleadingslashit, untrailingslashit, removeEndSlashes
+- npm test: 16/16 pass; npm run lint: clean
