@@ -19,3 +19,8 @@
 - Created test/unit/configure.test.js: 12 passing tests for getConfigDirectory, getGlobalDirectory, getDefaults (path composition under mocked os.homedir), and createProxyConfig (#{TRY_PROXY}/#{PROXY_URL} substitution, multi-placeholder, passthrough)
 - Mocked os.homedir() via jest.mock('os', ...) at the test-file level; getConfigFilePath is not exported so not tested directly
 - npm test: 68/68 pass; npm run lint: clean
+
+2026-06-05: create/inquirer unit tests
+- Created test/unit/create/inquirer.test.js: 21 passing tests for makeInquirer via stub prompt
+- Covers marshalDomains (single hostname, scalar domain passthrough, Set deduplication, extraHosts merging), marshalWordPress (boolean→{}, title/user/pass/email, type, purify, emptyContent), and top-level field passthrough (php, name, elasticsearch, mediaProxy)
+- npm test: 89/89 pass; npm run lint: clean
