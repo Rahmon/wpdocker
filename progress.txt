@@ -6,3 +6,7 @@
 - Bumped CI workflow node-version 12→26, added npm test step
 - Created test/unit/helpers.test.js: 16 passing tests for unleadingslashit, untrailingslashit, removeEndSlashes
 - npm test: 16/16 pass; npm run lint: clean
+
+2026-06-05: prompt-validators unit tests
+- Created test/unit/prompt-validators.test.js: 27 passing tests for validateNotEmpty, validateBool, parseHostname, parseProxyUrl
+- npm test: 43/43 pass; npm run lint: clean
