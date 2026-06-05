@@ -31,6 +31,12 @@
 - Mocked docker-compose npm package entirely; all 8 proxied methods tested for arg-forwarding and exitCode error throwing via interpretComposerResults; isRunning tested for resolve→true and reject→false
 - npm test: 124/124 pass; npm run lint: clean
 
+2026-06-05: environment integration tests
+- Created test/integration/environment.test.js: 20 passing tests
+- Mocked ./configure (get→manageHosts, getSslCertsDirectory), ./database, ./env-utils (getPathOrError, envSlug, getEnvHosts, getAllEnvironments), ./gateway (startGlobal/stopGlobal/restartGlobal), ./utils/docker-compose, fs-extra, inquirer, which, @vscode/sudo-prompt
+- Covers: start (pull vs no-pull, log flag, spinner calls), stop (cwd/log), restart (down-before-upAll when isRunning=true, skip down when false), deleteEnv (confirm=false short-circuits; confirm=true removes files/certs/db; manageHosts=true→sudo.exec; sudo error→spinner.warn), startAll/stopAll/restartAll/deleteAll iteration
+- npm test: 144/144 pass; npm run lint: clean
+
 2026-06-05: create/inquirer unit tests
 - Created test/unit/create/inquirer.test.js: 21 passing tests for makeInquirer via stub prompt
 - Covers marshalDomains (single hostname, scalar domain passthrough, Set deduplication, extraHosts merging), marshalWordPress (boolean→{}, title/user/pass/email, type, purify, emptyContent), and top-level field passthrough (php, name, elasticsearch, mediaProxy)
