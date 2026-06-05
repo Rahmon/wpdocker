@@ -48,6 +48,12 @@
 - Covers: create (correct SQL, destroy called, destroy on error, rejects on error), deleteDatabase (same 4), assignPrivs (same 4)
 - npm test: 170/170 pass; npm run lint: clean
 
+2026-06-05: certificates integration tests
+- Created test/integration/certificates.test.js: 17 passing tests
+- Mocked child_process (execSync), fs (promises.readFile/writeFile), mkcert (createCert), mkcert-prebuilt (returns path string), ./env-utils (envSlug), ./configure (getSslCertsDirectory)
+- Covers: getCARoot (correct command args, returns trimmed path), installCA (stdio:ignore vs inherit, returns true on success, returns false on throw, logs error when verbose=true, silent when verbose=false), generate (envSlug called, reads rootCA-key.pem and rootCA.pem, createCert called with allHosts including wildcards, writes .crt and .key files, returns cert/key paths)
+- npm test: 187/187 pass; npm run lint: clean
+
 2026-06-05: gateway integration tests
 - Created test/integration/gateway.test.js: 14 passing tests
 - Mocked ../../src/utils/make-docker (var-hoisted mockDocker swap), ../../src/utils/docker-compose, ../../src/configure, ../../src/env-utils, fs, netcat/client
