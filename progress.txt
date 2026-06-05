@@ -42,6 +42,12 @@
 - Covers marshalDomains (single hostname, scalar domain passthrough, Set deduplication, extraHosts merging), marshalWordPress (boolean→{}, title/user/pass/email, type, purify, emptyContent), and top-level field passthrough (php, name, elasticsearch, mediaProxy)
 - npm test: 89/89 pass; npm run lint: clean
 
+2026-06-05: database integration tests
+- Created test/integration/database.test.js: 12 passing tests
+- Mocked mysql module entirely (createConnection returns { query, destroy } jest.fn())
+- Covers: create (correct SQL, destroy called, destroy on error, rejects on error), deleteDatabase (same 4), assignPrivs (same 4)
+- npm test: 170/170 pass; npm run lint: clean
+
 2026-06-05: gateway integration tests
 - Created test/integration/gateway.test.js: 14 passing tests
 - Mocked ../../src/utils/make-docker (var-hoisted mockDocker swap), ../../src/utils/docker-compose, ../../src/configure, ../../src/env-utils, fs, netcat/client
