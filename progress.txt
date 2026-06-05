@@ -14,3 +14,8 @@
 2026-06-05: env-utils unit tests (pure subset)
 - Created test/unit/env-utils.test.js: 13 passing tests for envSlug (slugify behavior) and createDefaultProxy (http prefix, .com TLD handling)
 - npm test: 56/56 pass; npm run lint: clean
+
+2026-06-05: configure unit tests (pure subset)
+- Created test/unit/configure.test.js: 12 passing tests for getConfigDirectory, getGlobalDirectory, getDefaults (path composition under mocked os.homedir), and createProxyConfig (#{TRY_PROXY}/#{PROXY_URL} substitution, multi-placeholder, passthrough)
+- Mocked os.homedir() via jest.mock('os', ...) at the test-file level; getConfigFilePath is not exported so not tested directly
+- npm test: 68/68 pass; npm run lint: clean
