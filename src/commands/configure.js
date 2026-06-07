@@ -1,29 +1,24 @@
-const os = require( 'os' );
-const path = require( 'path' );
+const os = require('os');
+const path = require('path');
 
-const inquirer = require( 'inquirer' );
-const fs = require( 'fs-extra' );
+const inquirer = require('inquirer');
+const fs = require('fs-extra');
 
-const makeCommand = require( '../utils/make-command' );
-const { validateNotEmpty } = require( '../prompt-validators' );
-const {
-	configure,
-	get,
-	getConfigDirectory,
-	getDefaults,
-} = require( '../configure' );
+const makeCommand = require('../utils/make-command');
+const { validateNotEmpty } = require('../prompt-validators');
+const { configure, get, getConfigDirectory, getDefaults } = require('../configure');
 
 exports.command = 'configure';
 exports.desc = 'Set up a configuration for WP Docker.';
 
-exports.handler = makeCommand( { checkDocker: false }, async () => {
+exports.handler = makeCommand({ checkDocker: false }, async () => {
 	const defaults = getDefaults();
 
-	const currentDir = await get( 'sitesPath' );
-	const currentHosts = await get( 'manageHosts' );
-	const currentSnapshots = await get( 'snapshotsPath' );
+	const currentDir = await get('sitesPath');
+	const currentHosts = await get('manageHosts');
+	const currentSnapshots = await get('snapshotsPath');
 
-	const resolveHome = ( input ) => input.replace( '~', os.homedir() );
+	const resolveHome = (input) => input.replace('~', os.homedir());
 
 	const questions = [
 		{
@@ -52,18 +47,17 @@ exports.handler = makeCommand( { checkDocker: false }, async () => {
 		},
 	];
 
-	if ( fs.existsSync( path.join( getConfigDirectory(), 'global' ) ) ) {
-		questions.push(
-			{
-				name: 'overwriteGlobal',
-				type: 'confirm',
-				message: 'Do you want to reset your global services configuration? This will reset any customizations you have made.',
-				default: false
-			}
-		);
+	if (fs.existsSync(path.join(getConfigDirectory(), 'global'))) {
+		questions.push({
+			name: 'overwriteGlobal',
+			type: 'confirm',
+			message:
+				'Do you want to reset your global services configuration? This will reset any customizations you have made.',
+			default: false,
+		});
 	}
 
-	const answers = await inquirer.prompt( questions );
+	const answers = await inquirer.prompt(questions);
 
-	await configure( { ...defaults, ...answers } );
-} );
+	await configure({ ...defaults, ...answers });
+});

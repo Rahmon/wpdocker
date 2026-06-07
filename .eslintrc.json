@@ -1,31 +1,15 @@
 {
-	"extends": "@10up/eslint-config",
+	"extends": ["@10up/eslint-config", "prettier"],
 	"env": {
 		"es6": true,
 		"node": true,
 		"jest": true
 	},
 	"rules": {
-		"array-bracket-spacing": [
-			"error",
-			"always"
-		],
 		"camelcase": [
 			"error",
 			{
-				"allow": [
-					"depends_on",
-					"mem_limit",
-					"mem_reservation",
-					"cap_add"
-				]
-			}
-		],
-		"indent": [
-			"error",
-			"tab",
-			{
-				"SwitchCase": 1
+				"allow": ["depends_on", "mem_limit", "mem_reservation", "cap_add"]
 			}
 		],
 		"no-constant-condition": [
@@ -41,11 +25,6 @@
 				"allowEmptyCatch": true
 			}
 		],
-		"no-trailing-spaces": "error",
-		"object-curly-spacing": [
-			"error",
-			"always"
-		],
 		"prefer-destructuring": [
 			"error",
 			{
@@ -54,13 +33,6 @@
 			}
 		],
 		"require-jsdoc": "off",
-		"template-curly-spacing": [
-			"error",
-			"always"
-		],
-		"yoda": [
-			"error",
-			"never"
-		]
+		"yoda": ["error", "never"]
 	}
 }

@@ -1,7 +1,7 @@
-const Docker = require( 'dockerode' );
+const Docker = require('dockerode');
 
-module.exports = function makeDocker( args = {} ) {
-	return new Docker( {
+module.exports = function makeDocker(args = {}) {
+	return new Docker({
 		...args,
-	} );
+	});
 };

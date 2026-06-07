@@ -33,4 +33,3 @@ jobs:
           close-issue-reason: 'not_planned'
           any-of-labels: 'reporter feedback'
           remove-stale-when-updated: true
-          

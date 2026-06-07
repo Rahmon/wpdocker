@@ -1,20 +1,20 @@
-const database = require( '../../database' );
+const database = require('../../database');
 
-module.exports = function makeDatabase( spinner ) {
-	return async ( envSlug ) => {
-		if ( spinner ) {
-			spinner.start( 'Creating database...' );
+module.exports = function makeDatabase(spinner) {
+	return async (envSlug) => {
+		if (spinner) {
+			spinner.start('Creating database...');
 		} else {
-			console.log( 'Creating database:' );
+			console.log('Creating database:');
 		}
 
-		await database.create( envSlug );
-		await database.assignPrivs( envSlug );
+		await database.create(envSlug);
+		await database.assignPrivs(envSlug);
 
-		if ( spinner ) {
-			spinner.succeed( 'Database is created...' );
+		if (spinner) {
+			spinner.succeed('Database is created...');
 		} else {
-			console.log( ' - Done' );
+			console.log(' - Done');
 		}
 	};
 };
