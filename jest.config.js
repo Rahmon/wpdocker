@@ -4,4 +4,5 @@ module.exports = {
 	collectCoverageFrom: ['src/**/*.js'],
 	coverageDirectory: 'coverage',
 	clearMocks: true,
+	modulePathIgnorePatterns: ['<rootDir>/.claude/'],
 };
