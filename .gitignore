@@ -16,5 +16,6 @@ nbproject/
 # Other
 node_modules
 notes.md
+prd.md
 wp-local-docker-*
 coverage
