@@ -1,18 +1,7 @@
-const { validateNotEmpty, parseHostname, parseProxyUrl } = require( '../../prompt-validators' );
-const { createDefaultProxy } = require( '../../env-utils' );
+const { validateNotEmpty, parseHostname, parseProxyUrl } = require('../../prompt-validators');
+const { createDefaultProxy } = require('../../env-utils');
 
-const phpVersions = [
-	'8.3',
-	'8.2',
-	'8.1',
-	'8.0',
-	'7.4',
-	'7.3',
-	'7.2',
-	'7.1',
-	'7.0',
-	'5.6',
-];
+const phpVersions = ['8.3', '8.2', '8.1', '8.0', '7.4', '7.3', '7.2', '7.1', '7.0', '5.6'];
 
 const wordpressTypes = [
 	{ name: 'Single Site', value: 'single' },
@@ -20,65 +9,58 @@ const wordpressTypes = [
 	{ name: 'Subdomain Multisite', value: 'subdomain' },
 ];
 
-function defaultIsUndefined( val ) {
+function defaultIsUndefined(val) {
 	return () => typeof val === 'undefined';
 }
 
-function marshalDomains( original, { hostname, extraHosts } ) {
+function marshalDomains(original, { hostname, extraHosts }) {
 	const collection = new Set();
 
-	if ( Array.isArray( original ) ) {
-		original.forEach( collection.add, collection );
-	} else if ( typeof original === 'string' ) {
-		collection.add( original );
+	if (Array.isArray(original)) {
+		original.forEach(collection.add, collection);
+	} else if (typeof original === 'string') {
+		collection.add(original);
 	}
 
-	if ( hostname ) {
-		collection.add( hostname );
+	if (hostname) {
+		collection.add(hostname);
 	}
 
-	if ( Array.isArray( extraHosts ) ) {
-		extraHosts.forEach( collection.add, collection );
+	if (Array.isArray(extraHosts)) {
+		extraHosts.forEach(collection.add, collection);
 	}
 
-	const domains = Array.from( collection );
+	const domains = Array.from(collection);
 
 	return domains.length === 1 ? domains[0] : domains;
 }
 
-function marshalWordPress( original, answers ) {
+function marshalWordPress(original, answers) {
 	let wp = original || answers.wordpress;
-	if ( wp === true ) {
+	if (wp === true) {
 		wp = {};
 	}
 
-	[ 'title', 'username', 'password', 'email' ].forEach( ( key ) => {
-		if ( answers[key] ) {
+	['title', 'username', 'password', 'email'].forEach((key) => {
+		if (answers[key]) {
 			wp[key] = answers[key];
 		}
-	} );
+	});
 
-	if ( answers.wordpressType ) {
+	if (answers.wordpressType) {
 		wp.type = answers.wordpressType;
 	}
 
-	if ( answers.emptyContent ) {
+	if (answers.emptyContent) {
 		wp.purify = true;
 	}
 
 	return wp;
 }
 
-module.exports = function makeInquirer( { prompt } ) {
-	return async ( defaults = {} ) => {
-		const {
-			name,
-			domain,
-			mediaProxy,
-			php,
-			elasticsearch,
-			wordpress,
-		} = defaults;
+module.exports = function makeInquirer({ prompt }) {
+	return async (defaults = {}) => {
+		const { name, domain, mediaProxy, php, elasticsearch, wordpress } = defaults;
 
 		const {
 			type: wordpressType,
@@ -89,7 +71,7 @@ module.exports = function makeInquirer( { prompt } ) {
 			purify: wordpressPurify,
 		} = wordpress || {};
 
-		const answers = await prompt( [
+		const answers = await prompt([
 			{
 				name: 'hostname',
 				type: 'input',
@@ -97,7 +79,7 @@ module.exports = function makeInquirer( { prompt } ) {
 				validate: validateNotEmpty,
 				filter: parseHostname,
 				when() {
-					return !domain || ( Array.isArray( domain ) && !domain.length );
+					return !domain || (Array.isArray(domain) && !domain.length);
 				},
 			},
 			{
@@ -106,21 +88,22 @@ module.exports = function makeInquirer( { prompt } ) {
 				message: 'Are there additional domains the site should respond to?',
 				default: false,
 				when() {
-					return !domain || ( Array.isArray( domain ) && !domain.length );
+					return !domain || (Array.isArray(domain) && !domain.length);
 				},
 			},
 			{
 				name: 'extraHosts',
 				type: 'input',
-				message: 'Enter additional hostnames separated by spaces (Ex: docker1.test docker2.test)',
-				filter( value ) {
+				message:
+					'Enter additional hostnames separated by spaces (Ex: docker1.test docker2.test)',
+				filter(value) {
 					return value
-						.split( ' ' )
-						.map( ( value ) => value.trim() )
-						.filter( ( value ) => value.length > 0 )
-						.map( parseHostname );
+						.split(' ')
+						.map((value) => value.trim())
+						.filter((value) => value.length > 0)
+						.map(parseHostname);
 				},
-				when( answers ) {
+				when(answers) {
 					return answers.addMoreHosts === true;
 				},
 			},
@@ -131,14 +114,14 @@ module.exports = function makeInquirer( { prompt } ) {
 				choices: phpVersions,
 				default: '7.4',
 				when() {
-					return !phpVersions.includes( php );
+					return !phpVersions.includes(php);
 				},
 			},
 			{
 				name: 'wordpress',
 				type: 'confirm',
 				message: 'Do you want to install WordPress?',
-				when: defaultIsUndefined( wordpress ),
+				when: defaultIsUndefined(wordpress),
 			},
 			{
 				name: 'wordpressType',
@@ -146,9 +129,11 @@ module.exports = function makeInquirer( { prompt } ) {
 				message: 'Select a WordPress installation type:',
 				choices: wordpressTypes,
 				default: 'single',
-				when( answers ) {
+				when(answers) {
 					const installWp = answers.wordpress === true;
-					const wrongType = wordpressType && !wordpressTypes.map( ( { value } ) => value ).includes( wordpressType );
+					const wrongType =
+						wordpressType &&
+						!wordpressTypes.map(({ value }) => value).includes(wordpressType);
 					return installWp || wrongType;
 				},
 			},
@@ -156,12 +141,12 @@ module.exports = function makeInquirer( { prompt } ) {
 				name: 'title',
 				type: 'input',
 				message: 'Site Name',
-				default( { hostname } ) {
+				default({ hostname }) {
 					return hostname;
 				},
 				validate: validateNotEmpty,
-				when( answers ) {
-					return answers.wordpress === true || ( wordpress && !wordpressTitle );
+				when(answers) {
+					return answers.wordpress === true || (wordpress && !wordpressTitle);
 				},
 			},
 			{
@@ -170,8 +155,8 @@ module.exports = function makeInquirer( { prompt } ) {
 				message: 'Admin Username',
 				default: 'admin',
 				validate: validateNotEmpty,
-				when( answers ) {
-					return answers.wordpress === true || ( wordpress && !wordpressUsername );
+				when(answers) {
+					return answers.wordpress === true || (wordpress && !wordpressUsername);
 				},
 			},
 			{
@@ -180,8 +165,8 @@ module.exports = function makeInquirer( { prompt } ) {
 				message: 'Admin Password',
 				default: 'password',
 				validate: validateNotEmpty,
-				when( answers ) {
-					return answers.wordpress === true || ( wordpress && !wordpressPassword );
+				when(answers) {
+					return answers.wordpress === true || (wordpress && !wordpressPassword);
 				},
 			},
 			{
@@ -190,8 +175,8 @@ module.exports = function makeInquirer( { prompt } ) {
 				message: 'Admin Email',
 				default: 'admin@example.com',
 				validate: validateNotEmpty,
-				when( answers ) {
-					return answers.wordpress === true || ( wordpress && !wordpressEmail );
+				when(answers) {
+					return answers.wordpress === true || (wordpress && !wordpressEmail);
 				},
 			},
 			{
@@ -199,27 +184,28 @@ module.exports = function makeInquirer( { prompt } ) {
 				type: 'confirm',
 				message: 'Do you want to remove the default content?',
 				default: false,
-				when( answers ) {
-					return answers.wordpress === true || ( wordpress && !wordpressPurify );
+				when(answers) {
+					return answers.wordpress === true || (wordpress && !wordpressPurify);
 				},
 			},
 			{
 				name: 'mediaProxy',
 				type: 'confirm',
-				message: 'Do you want to set a proxy for media assets? (i.e. Serving /uploads/ directory assets from a production site)',
+				message:
+					'Do you want to set a proxy for media assets? (i.e. Serving /uploads/ directory assets from a production site)',
 				default: false,
-				when: defaultIsUndefined( mediaProxy ),
+				when: defaultIsUndefined(mediaProxy),
 			},
 			{
 				name: 'proxy',
 				type: 'input',
 				message: 'Proxy URL',
-				default( { hostname } ) {
-					return createDefaultProxy( hostname );
+				default({ hostname }) {
+					return createDefaultProxy(hostname);
 				},
 				validate: validateNotEmpty,
 				filter: parseProxyUrl,
-				when( answers ) {
+				when(answers) {
 					return answers.mediaProxy === true;
 				},
 			},
@@ -228,18 +214,18 @@ module.exports = function makeInquirer( { prompt } ) {
 				type: 'confirm',
 				message: 'Do you need Elasticsearch',
 				default: false,
-				when: defaultIsUndefined( elasticsearch ),
+				when: defaultIsUndefined(elasticsearch),
 			},
-		] );
+		]);
 
 		return {
 			...defaults,
 			name: name || answers.title,
-			domain: marshalDomains( domain, answers ),
+			domain: marshalDomains(domain, answers),
 			mediaProxy: answers.proxy || false,
 			php: php || answers.phpVersion,
 			elasticsearch: elasticsearch || answers.elasticsearch || false,
-			wordpress: marshalWordPress( wordpress, answers ),
+			wordpress: marshalWordPress(wordpress, answers),
 		};
 	};
 };

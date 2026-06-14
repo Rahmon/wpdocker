@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
-const yargs = require( 'yargs' );
+const yargs = require('yargs');
 
-const { checkIfConfigured, configureDefaults } = require( './src/configure' );
-const { checkForUpdates } = require( './src/command-utils' );
+const { checkIfConfigured, configureDefaults } = require('./src/configure');
+const { checkForUpdates } = require('./src/command-utils');
 
 async function bootstrap() {
 	// check configuration
 	const configured = await checkIfConfigured();
-	if ( configured === false ) {
+	if (configured === false) {
 		await configureDefaults();
 	}
 
@@ -16,28 +16,28 @@ async function bootstrap() {
 	await checkForUpdates();
 
 	// usage and help flag
-	yargs.scriptName( 'wpdocker' );
-	yargs.usage( 'Usage: wpdocker <command>' );
-	yargs.wrap( Math.min( 150, yargs.terminalWidth() ) );
-	yargs.help( 'h' );
-	yargs.alias( 'h', 'help' );
-	yargs.alias( 'v', 'version' );
+	yargs.scriptName('wpdocker');
+	yargs.usage('Usage: wpdocker <command>');
+	yargs.wrap(Math.min(150, yargs.terminalWidth()));
+	yargs.help('h');
+	yargs.alias('h', 'help');
+	yargs.alias('v', 'version');
 
 	// global options
-	yargs.option( 'verbose', {
+	yargs.option('verbose', {
 		description: 'Display extended output',
 		default: false,
 		type: 'boolean',
-	} );
+	});
 
-	yargs.option( 'env', {
+	yargs.option('env', {
 		description: 'Environment name',
 		default: false,
 		type: 'string',
-	} );
+	});
 
 	// define commands, parse and process CLI args
-	yargs.commandDir( 'src/commands' );
+	yargs.commandDir('src/commands');
 	yargs.demandCommand();
 	yargs.parse();
 }

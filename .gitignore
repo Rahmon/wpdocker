@@ -16,4 +16,7 @@ nbproject/
 # Other
 node_modules
 notes.md
+prd.md
+progress.txt
 wp-local-docker-*
+coverage

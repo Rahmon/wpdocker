@@ -35,8 +35,15 @@
 		"postinstall": "npm run wpdocker postinstall --silent",
 		"wpdocker": "./index.js",
 		"wpdocker-hosts": "./hosts.js",
+		"prepare": "husky",
 		"lint": "eslint . --ext .js --ignore-pattern node_modules",
-		"format": "npm run lint --silent -- --fix"
+		"format": "prettier --write .",
+		"format:check": "prettier --check .",
+		"test": "jest",
+		"test:unit": "jest test/unit",
+		"test:integration": "jest test/integration",
+		"test:watch": "jest --watch",
+		"test:coverage": "jest --coverage"
 	},
 	"bin": {
 		"wpdocker": "index.js",
@@ -80,18 +87,18 @@
 		"yargs": "^16.2.0"
 	},
 	"devDependencies": {
-		"@10up/eslint-config": "^1.0.9",
-		"babel-eslint": "^10.0.3",
 		"eslint": "^7.32.0",
-		"husky": "^4.3.8",
-		"lint-staged": "^10.5.4"
+		"eslint-config-prettier": "^9.1.2",
+		"husky": "^9.1.7",
+		"jest": "^29.7.0",
+		"lint-staged": "^10.5.4",
+		"prettier": "^3.8.3"
 	},
 	"lint-staged": {
-		"*.js": "eslint"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
-		}
+		"*.js": [
+			"eslint --fix",
+			"prettier --write"
+		],
+		"*.{json,yml,yaml}": "prettier --write"
 	}
 }
