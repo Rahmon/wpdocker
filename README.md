@@ -679,7 +679,7 @@ From:
     # ...
     volumes:
       - './wordpress:/var/www/html:cached'
-      - './config/php-fpm/docker-php-ext-xdebug.ini:/etc/php.d/5.6/fpm/docker-php-ext-xdebug.ini:cached'
+      - './config/php-fpm/docker-php-ext-xdebug.ini:/etc/php/5.6/fpm/conf.d/docker-php-ext-xdebug.ini:cached'
 ```
 
 To:
@@ -690,7 +690,7 @@ To:
     # ...
     volumes:
       - './wordpress:/var/www/html:cached'
-      - './config/php-fpm/docker-php-ext-xdebug.ini:/etc/php.d/7.4/fpm/docker-php-ext-xdebug.ini:cached'
+      - './config/php-fpm/docker-php-ext-xdebug.ini:/etc/php/7.4/fpm/conf.d/docker-php-ext-xdebug.ini:cached'
 ```
 
 Once you update this run `docker-compose down` and `docker-compose up` to rebuild the containers.
