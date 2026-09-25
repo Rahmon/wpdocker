@@ -2,18 +2,34 @@ name: Node CI
 
 on:
   push:
+    branches: [develop, main]
+  pull_request:
+    branches: [develop, main]
+
+permissions:
+  contents: read
 
 jobs:
   checks:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20, 22, 26]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
-          node-version: '12'
-      - name: install dependencies
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - name: Install dependencies
         run: npm ci
         env:
           CI: true
-      - name: run linter
+      - name: Lint (ESLint)
         run: npm run lint --silent
+      - name: Format check (Prettier)
+        run: npm run format:check
+      - name: Run tests
+        run: npm test

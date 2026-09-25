@@ -1,0 +1,20 @@
+# Dependencies & coverage
+node_modules
+coverage
+
+# Lock / generated files
+package-lock.json
+skills-lock.json
+
+# Husky internals (regenerated on install)
+.husky/_
+
+# Local agent tooling
+.agents
+.claude
+
+# Markdown is hand-formatted (e.g. README); opt in by removing this line
+*.md
+
+# nginx error-page templates (intentionally minimal HTML)
+*.html

@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`makeDockerCompose matches snapshot for a standard non-linux environment 1`] = `
+{
+  "networks": {
+    "wplocaldocker": {
+      "external": true,
+      "name": "wplocaldocker",
+    },
+  },
+  "services": {
+    "memcached": {
+      "image": "memcached:latest",
+    },
+    "nginx": {
+      "depends_on": [
+        "phpfpm",
+      ],
+      "environment": {
+        "CERT_NAME": "mysite-test",
+        "HTTPS_METHOD": "noredirect",
+        "VIRTUAL_HOST": "mysite.test,*.mysite.test",
+      },
+      "expose": [
+        "80",
+        "443",
+      ],
+      "image": "nginx:latest",
+      "networks": [
+        "default",
+        "wplocaldocker",
+      ],
+      "volumes": [
+        "./wordpress:/var/www/html:cached",
+        "./config/nginx/server.conf:/etc/nginx/conf.d/common/_server.conf:cached",
+        "./config/nginx/default.conf:/etc/nginx/conf.d/default.conf:cached",
+      ],
+    },
+    "phpfpm": {
+      "cap_add": [
+        "SYS_PTRACE",
+      ],
+      "depends_on": [
+        "memcached",
+      ],
+      "dns": [
+        "10.0.0.2",
+      ],
+      "environment": {
+        "ENABLE_XDEBUG": "true",
+        "PHP_IDE_CONFIG": "serverName=mysite-test",
+      },
+      "image": "10up/wp-php-fpm-dev:8.2-ubuntu",
+      "networks": [
+        "default",
+        "wplocaldocker",
+      ],
+      "volumes": [
+        "./wordpress:/var/www/html:cached",
+        "./config/php-fpm/docker-php-ext-xdebug.ini:/etc/php/8.2/fpm/conf.d/docker-php-ext-xdebug.ini:cached",
+        "wplocaldockerCache:/var/www/.wp-cli/cache:cached",
+        "~/.ssh:/home/www-data/.ssh:cached",
+        "/home/testuser/.wpsnapshots:/home/www-data/.wpsnapshots:cached",
+        "~/.aws:/home/www-data/.aws:cached,ro",
+        "./config/php-fpm/wp-cli.local.yml:/var/www/.wp-cli/config.yml:cached",
+      ],
+    },
+  },
+  "version": "2.2",
+  "volumes": {
+    "wplocaldockerCache": {
+      "external": true,
+      "name": "wplocaldockerCache",
+    },
+  },
+}
+`;

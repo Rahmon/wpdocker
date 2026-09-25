@@ -81,7 +81,7 @@ Each environment you create in WP Docker is powered by a couple of services you 
 - **memcached**: a distributed memory object caching system,
 - **elasticsearch** (optional): a search and analytics engine.
 
-You can choose to run your environment on different versions of PHP including 5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2 or 8.3.
+You can choose to run your environment on different versions of PHP including 5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2, 8.3, 8.4 or 8.5.
 
 WP Docker comes with features that make managing your WordPress development a breeze:
 
@@ -679,7 +679,7 @@ From:
     # ...
     volumes:
       - './wordpress:/var/www/html:cached'
-      - './config/php-fpm/docker-php-ext-xdebug.ini:/etc/php.d/5.6/fpm/docker-php-ext-xdebug.ini:cached'
+      - './config/php-fpm/docker-php-ext-xdebug.ini:/etc/php/5.6/fpm/conf.d/docker-php-ext-xdebug.ini:cached'
 ```
 
 To:
@@ -690,7 +690,7 @@ To:
     # ...
     volumes:
       - './wordpress:/var/www/html:cached'
-      - './config/php-fpm/docker-php-ext-xdebug.ini:/etc/php.d/7.4/fpm/docker-php-ext-xdebug.ini:cached'
+      - './config/php-fpm/docker-php-ext-xdebug.ini:/etc/php/7.4/fpm/conf.d/docker-php-ext-xdebug.ini:cached'
 ```
 
 Once you update this run `docker-compose down` and `docker-compose up` to rebuild the containers.

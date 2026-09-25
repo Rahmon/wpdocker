@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file, per [the Keep a Changelog standard](http://keepachangelog.com/).
 
+## [1.3.0] - 2026-09-25
+### Added
+- PHP 8.4 and 8.5 options
+- Unit and integration test suite (Jest)
+- CI workflow running lint, format check and tests
+- Pre-commit hook (lint, format, unit tests) via husky
+
+### Changed
+- Code formatting with Prettier
+- Removed @10up/eslint-config and babel-eslint dev dependencies
+
+### Fixed
+- Xdebug ini path in the README volume mount example
+
+### Removes
+
 ## [1.2.0] - 2026-05-29
 ### Added
 

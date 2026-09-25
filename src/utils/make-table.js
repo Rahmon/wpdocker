@@ -1,7 +1,7 @@
-const chalk = require( 'chalk' );
-const { table } = require( 'table' );
+const chalk = require('chalk');
+const { table } = require('table');
 
-module.exports = function makeTable( data ) {
+module.exports = function makeTable(data) {
 	const border = {
 		topBody: '─',
 		topJoin: '┬',
@@ -20,18 +20,16 @@ module.exports = function makeTable( data ) {
 		joinBody: '─',
 		joinLeft: '├',
 		joinRight: '┤',
-		joinJoin: '┼'
+		joinJoin: '┼',
 	};
 
-	return table(
-		data,
-		{
-			border: Object
-				.keys( border )
-				.reduce( ( accumulator, key ) => ( {
-					...accumulator,
-					[ key ]: chalk.grey( border[ key ] ),
-				} ), {} ),
-		},
-	);
+	return table(data, {
+		border: Object.keys(border).reduce(
+			(accumulator, key) => ({
+				...accumulator,
+				[key]: chalk.grey(border[key]),
+			}),
+			{},
+		),
+	});
 };

@@ -7,6 +7,8 @@ exports.globalImages = {
 };
 
 exports.images = {
+	'php8.5': '10up/wp-php-fpm-dev:8.5-noble',
+	'php8.4': '10up/wp-php-fpm-dev:8.4-noble',
 	'php8.3': '10up/wp-php-fpm-dev:8.3-ubuntu',
 	'php8.2': '10up/wp-php-fpm-dev:8.2-ubuntu',
 	'php8.1': '10up/wp-php-fpm-dev:8.1-ubuntu',
