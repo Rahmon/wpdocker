@@ -39,6 +39,7 @@ You can consider using alternatives:
 	+ [Updating](#updating)
 * [Using WP Docker](#using-wp-docker)
 	+ [Create an Environment](#create-an-environment)
+		- [Quick Create](#quick-create)
 	+ [Start an Environment](#start-an-environment)
 	+ [Stop an Environment](#stop-an-environment)
 	+ [Configure an Environment](#configure-an-environment)
@@ -238,6 +239,36 @@ wpdocker create
 ```
 
 You'll be guided through the process of configuring your environment to fit your needs.
+
+#### Quick Create
+
+If you just want a standard single-site WordPress environment, pass the hostname directly and skip the prompts:
+
+```bash
+wpdocker create <hostname>
+# or
+wpdocker new <hostname>
+```
+
+WP Docker won't ask you anything. Every option except the hostname uses the same default the interactive flow offers:
+
+| Option                 | Default             |
+| ---------------------- | ------------------- |
+| Extra hostnames        | none                |
+| PHP version            | `8.3`               |
+| Install WordPress      | yes                 |
+| WordPress type         | Single Site         |
+| Site title             | the hostname        |
+| Admin username         | `admin`             |
+| Admin password         | `password`          |
+| Admin email            | `admin@example.com` |
+| Remove default content | no                  |
+| Media proxy            | off                 |
+| Elasticsearch          | off                 |
+
+The hostname gets the same cleanup as the interactive prompt, so `https://my-site.test/` becomes `my-site.test`. When the site is ready, the success message shows the homepage and WP admin URLs along with the admin username and password.
+
+If `manageHosts` is enabled, your operating system may still ask for your password so WP Docker can update the hosts file. To run quick create with no interaction at all (e.g. in CI), turn off hosts file management with `wpdocker configure` (this sets `manageHosts` to `false`).
 
 We recommend using the `.test` top-level domain (TLD) for your local environments. Why `.test`? This TLD is reserved for software testing and won't be installed into the global Domain Name System. Plus, WP Docker is set up to direct any container-to-container traffic for `.test` TLDs straight to the gateway container. This means features like WP Cron and the REST API will work between environments right out of the box.
 
