@@ -1,5 +1,3 @@
-const { EOL } = require('os');
-
 const inquirer = require('inquirer');
 const fsExtra = require('fs-extra');
 const sudo = require('@vscode/sudo-prompt');
@@ -12,6 +10,7 @@ const envUtils = require('../env-utils');
 const makeSpinner = require('../utils/make-spinner');
 const makeCommand = require('../utils/make-command');
 const makeBoxen = require('../utils/make-boxen');
+const displayError = require('../utils/display-error');
 const { replaceLinks } = require('../utils/make-link');
 
 const makeInquirer = require('./create/inquirer');
@@ -24,9 +23,18 @@ const makeInstallWordPress = require('./create/install-wordpress');
 const makeSaveJsonFile = require('./create/save-json-file');
 const makeUpdateHosts = require('./create/update-hosts');
 const makeCert = require('./create/make-cert');
+const makeSuccessMessage = require('./create/success-message');
 
-async function createCommand(spinner, defaults = {}) {
-	const answers = await makeInquirer(inquirer)(defaults);
+/**
+ * Create an environment.
+ *
+ * @param {object} spinner Spinner instance (undefined in verbose mode).
+ * @param {object} defaults Pre-filled answers for the interactive prompter.
+ * @param {object|null} prebuiltSettings Settings to use instead of prompting (quick create).
+ * @returns {Promise<object>} The resulting environment settings.
+ */
+async function createCommand(spinner, defaults = {}, prebuiltSettings = null) {
+	const answers = prebuiltSettings || (await makeInquirer(inquirer)(defaults));
 	await envUtils.checkForEOLPHP(answers.php);
 
 	const settings = {
@@ -65,13 +73,21 @@ async function createCommand(spinner, defaults = {}) {
 	return settings;
 }
 
-exports.command = 'create';
+exports.command = 'create [hostname]';
 exports.desc = 'Create a new docker environment.';
 exports.aliases = ['new'];
 
-exports.handler = makeCommand(async ({ verbose }) => {
+exports.builder = function (yargs) {
+	yargs.positional('hostname', {
+		type: 'string',
+		describe:
+			'Optional. Hostname for a quick create using the default settings, without prompts.',
+	});
+};
+
+const runCreate = makeCommand(async ({ verbose }, quickSettings) => {
 	const spinner = !verbose ? makeSpinner() : undefined;
-	const answers = await createCommand(spinner, {});
+	const answers = await createCommand(spinner, {}, quickSettings);
 
 	if (spinner && !!answers.wordpress && answers.wordpress.type === 'subdomain') {
 		spinner.info(
@@ -79,23 +95,25 @@ exports.handler = makeCommand(async ({ verbose }) => {
 		);
 	}
 
-	let info = `Successfully Created Site!${EOL}${EOL}`;
-	const links = {};
-	const http = answers.certs ? 'https' : 'http';
-
-	(Array.isArray(answers.domain) ? answers.domain : [answers.domain]).forEach((host) => {
-		const home = `${http}://${host}/`;
-		const admin = `${http}://${host}/wp-admin/`;
-
-		links[home] = home;
-		links[admin] = admin;
-
-		info += `Homepage: ${home}${EOL}`;
-		info += `WP admin: ${admin}${EOL}`;
-		info += EOL;
-	});
+	const { info, links } = makeSuccessMessage(answers, !!quickSettings);
 
 	console.log(replaceLinks(makeBoxen()(info), links));
 });
+
+exports.handler = (argv) => {
+	let quickSettings = null;
+
+	// Validate the hostname before the Docker check and before any filesystem work.
+	if (argv.hostname !== undefined) {
+		try {
+			quickSettings = makeInquirer.buildQuickSettings(argv.hostname);
+		} catch (err) {
+			displayError(err.message);
+			return undefined;
+		}
+	}
+
+	return runCreate(argv, quickSettings);
+};
 
 exports.createCommand = createCommand;
