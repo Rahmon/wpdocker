@@ -260,3 +260,59 @@ describe('makeInquirer — top-level field passthrough', () => {
 		expect(result.mediaProxy).toBe(false);
 	});
 });
+
+describe('DEFAULTS', () => {
+	it('offers PHP 8.3 as the interactive default', async () => {
+		const prompt = stubPrompt({});
+		const inquirer = makeInquirer({ prompt });
+		await inquirer({});
+		const questions = prompt.mock.calls[0][0];
+		const phpQuestion = questions.find(({ name }) => name === 'phpVersion');
+		expect(phpQuestion.default).toBe('8.3');
+		expect(makeInquirer.DEFAULTS.php).toBe('8.3');
+	});
+});
+
+describe('buildQuickSettings', () => {
+	const { DEFAULTS, buildQuickSettings } = makeInquirer;
+
+	// The answers a user gives by pressing Enter through every prompt.
+	function enterThroughAnswers(hostname) {
+		return {
+			hostname,
+			addMoreHosts: false,
+			phpVersion: DEFAULTS.php,
+			wordpress: DEFAULTS.wordpress,
+			wordpressType: DEFAULTS.wordpressType,
+			title: hostname,
+			username: DEFAULTS.username,
+			password: DEFAULTS.password,
+			email: DEFAULTS.email,
+			emptyContent: DEFAULTS.emptyContent,
+			mediaProxy: DEFAULTS.mediaProxy,
+			elasticsearch: DEFAULTS.elasticsearch,
+		};
+	}
+
+	it('matches the interactive result of pressing Enter through every prompt', async () => {
+		const inquirer = makeInquirer({ prompt: stubPrompt(enterThroughAnswers('x.test')) });
+		const interactive = await inquirer({});
+		expect(buildQuickSettings('x.test')).toEqual(interactive);
+	});
+
+	it('uses the hostname as the domain and the site title', () => {
+		const settings = buildQuickSettings('my-site.test');
+		expect(settings.domain).toBe('my-site.test');
+		expect(settings.wordpress.title).toBe('my-site.test');
+	});
+
+	it('normalizes the hostname like the interactive prompt', () => {
+		const settings = buildQuickSettings('https://x.test/some/path');
+		expect(settings.domain).toBe('x.test');
+		expect(settings.wordpress.title).toBe('x.test');
+	});
+
+	it.each(['', '   '])('rejects the empty hostname %j', (hostname) => {
+		expect(() => buildQuickSettings(hostname)).toThrow('This field is required');
+	});
+});
