@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file, per [the Keep a Changelog standard](http://keepachangelog.com/).
 
+## [Unreleased]
+### Added
+- Quick create: `wpdocker create <hostname>` (and `wpdocker new <hostname>`) creates a complete environment with no prompts, using the same defaults as the interactive flow
+
+### Changed
+- Default PHP version for new environments is now 8.3 (was 7.4)
+
+### Fixed
+
+### Removes
+
 ## [1.3.0] - 2026-09-25
 ### Added
 - PHP 8.4 and 8.5 options
