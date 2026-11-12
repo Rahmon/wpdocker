@@ -16,6 +16,22 @@ const phpVersions = [
 	'5.6',
 ];
 
+/**
+ * Default answers shared by the interactive prompts and quick create.
+ */
+const DEFAULTS = Object.freeze({
+	extraHosts: [],
+	php: '8.3',
+	wordpress: true,
+	wordpressType: 'single',
+	username: 'admin',
+	password: 'password',
+	email: 'admin@example.com',
+	emptyContent: false,
+	mediaProxy: false,
+	elasticsearch: false,
+});
+
 const wordpressTypes = [
 	{ name: 'Single Site', value: 'single' },
 	{ name: 'Subdirectory Multisite', value: 'subdirectory' },
@@ -71,6 +87,41 @@ function marshalWordPress(original, answers) {
 	return wp;
 }
 
+/**
+ * Build environment settings for quick create without prompting.
+ *
+ * @param {string} rawHostname Hostname as typed by the user.
+ * @returns {object} Environment settings.
+ * @throws {Error} When the hostname is empty after normalization.
+ */
+function buildQuickSettings(rawHostname) {
+	const hostname = parseHostname(String(rawHostname ?? ''));
+	const valid = validateNotEmpty(hostname);
+	if (valid !== true) {
+		throw new Error(valid);
+	}
+
+	const wordpress = DEFAULTS.wordpress
+		? {
+				title: hostname,
+				username: DEFAULTS.username,
+				password: DEFAULTS.password,
+				email: DEFAULTS.email,
+				type: DEFAULTS.wordpressType,
+				...(DEFAULTS.emptyContent ? { purify: true } : {}),
+			}
+		: false;
+
+	return {
+		name: hostname,
+		domain: marshalDomains(undefined, { hostname, extraHosts: DEFAULTS.extraHosts }),
+		mediaProxy: false,
+		php: DEFAULTS.php,
+		elasticsearch: DEFAULTS.elasticsearch,
+		wordpress,
+	};
+}
+
 module.exports = function makeInquirer({ prompt }) {
 	return async (defaults = {}) => {
 		const { name, domain, mediaProxy, php, elasticsearch, wordpress } = defaults;
@@ -99,7 +150,7 @@ module.exports = function makeInquirer({ prompt }) {
 				name: 'addMoreHosts',
 				type: 'confirm',
 				message: 'Are there additional domains the site should respond to?',
-				default: false,
+				default: DEFAULTS.extraHosts.length > 0,
 				when() {
 					return !domain || (Array.isArray(domain) && !domain.length);
 				},
@@ -125,7 +176,7 @@ module.exports = function makeInquirer({ prompt }) {
 				type: 'list',
 				message: 'What version of PHP would you like to use?',
 				choices: phpVersions,
-				default: '7.4',
+				default: DEFAULTS.php,
 				when() {
 					return !phpVersions.includes(php);
 				},
@@ -134,6 +185,7 @@ module.exports = function makeInquirer({ prompt }) {
 				name: 'wordpress',
 				type: 'confirm',
 				message: 'Do you want to install WordPress?',
+				default: DEFAULTS.wordpress,
 				when: defaultIsUndefined(wordpress),
 			},
 			{
@@ -141,7 +193,7 @@ module.exports = function makeInquirer({ prompt }) {
 				type: 'list',
 				message: 'Select a WordPress installation type:',
 				choices: wordpressTypes,
-				default: 'single',
+				default: DEFAULTS.wordpressType,
 				when(answers) {
 					const installWp = answers.wordpress === true;
 					const wrongType =
@@ -166,7 +218,7 @@ module.exports = function makeInquirer({ prompt }) {
 				name: 'username',
 				type: 'input',
 				message: 'Admin Username',
-				default: 'admin',
+				default: DEFAULTS.username,
 				validate: validateNotEmpty,
 				when(answers) {
 					return answers.wordpress === true || (wordpress && !wordpressUsername);
@@ -176,7 +228,7 @@ module.exports = function makeInquirer({ prompt }) {
 				name: 'password',
 				type: 'input',
 				message: 'Admin Password',
-				default: 'password',
+				default: DEFAULTS.password,
 				validate: validateNotEmpty,
 				when(answers) {
 					return answers.wordpress === true || (wordpress && !wordpressPassword);
@@ -186,7 +238,7 @@ module.exports = function makeInquirer({ prompt }) {
 				name: 'email',
 				type: 'input',
 				message: 'Admin Email',
-				default: 'admin@example.com',
+				default: DEFAULTS.email,
 				validate: validateNotEmpty,
 				when(answers) {
 					return answers.wordpress === true || (wordpress && !wordpressEmail);
@@ -196,7 +248,7 @@ module.exports = function makeInquirer({ prompt }) {
 				name: 'emptyContent',
 				type: 'confirm',
 				message: 'Do you want to remove the default content?',
-				default: false,
+				default: DEFAULTS.emptyContent,
 				when(answers) {
 					return answers.wordpress === true || (wordpress && !wordpressPurify);
 				},
@@ -206,7 +258,7 @@ module.exports = function makeInquirer({ prompt }) {
 				type: 'confirm',
 				message:
 					'Do you want to set a proxy for media assets? (i.e. Serving /uploads/ directory assets from a production site)',
-				default: false,
+				default: DEFAULTS.mediaProxy,
 				when: defaultIsUndefined(mediaProxy),
 			},
 			{
@@ -226,7 +278,7 @@ module.exports = function makeInquirer({ prompt }) {
 				name: 'elasticsearch',
 				type: 'confirm',
 				message: 'Do you need Elasticsearch',
-				default: false,
+				default: DEFAULTS.elasticsearch,
 				when: defaultIsUndefined(elasticsearch),
 			},
 		]);
@@ -242,3 +294,6 @@ module.exports = function makeInquirer({ prompt }) {
 		};
 	};
 };
+
+module.exports.DEFAULTS = DEFAULTS;
+module.exports.buildQuickSettings = buildQuickSettings;
