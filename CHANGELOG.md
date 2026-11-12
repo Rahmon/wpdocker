@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+### Fixed
+
+### Removes
+
+## [1.4.0] - 2026-11-11
+### Added
 - Quick create: `wpdocker create <hostname>` (and `wpdocker new <hostname>`) creates a complete environment with no prompts, using the same defaults as the interactive flow
 
 ### Changed
